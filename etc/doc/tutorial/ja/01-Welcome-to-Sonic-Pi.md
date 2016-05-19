@@ -15,4 +15,9 @@ Sonic Piを改善するために、気づいたことや、アイデアでを持
 始まりから終わりまで、簡単に学べるように手引きを書いたので、自由に、色々なセクションを覗いてみてください。
 何か、不足している点に気がついたら、将来のバージョンのために検討したいので、知らせてください。
 
+Finally, watching others live code is a really great way to learn. I
+regularly stream live on
+[livecoding.tv/samaaron](http://livecoding.tv/samaaron) so please do
+drop by, say hi and ask me lots of questions :-)
+
 では、早速はじめましょう！
