@@ -19,13 +19,18 @@ trouver un de mes morceaux [Meta-eX](http://meta-ex.com) dans les exemples.
 Si vous avez des observations ou des idées pour améliorer Sonic Pi - Faîtes
 m'en part s'il vous plait - les retours sont tellement utiles. Vous ne le
 savez probablement pas, mais votre idée pourrait être la prochaine
-fonctionnalité importante !
+fonctionnalité importante!
 
-Finalement, ce tutoriel est divisé en sections groupées par catégories.
+Ce tutoriel est divisé en sections groupées par catégories.
 Même si je l'ai écrit pour avoir une progression d'apprentissage facile
 du début jusqu'à la fin, sentez-vous vraiment libre de plonger dans l'une
 ou l'autre section comme cela vous convient. Si vous pensez qu'il manque
 quelque chose, n'hésitez pas à me le faire savoir et je le prendrai en
 compte dans une prochaine version.
+
+Finally, watching others live code is a really great way to learn. I
+regularly stream live on
+[livecoding.tv/samaaron](http://livecoding.tv/samaaron) so please do
+drop by, say hi and ask me lots of questions :-)
 
 OK, démarrons...

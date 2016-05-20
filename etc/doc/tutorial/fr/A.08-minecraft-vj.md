@@ -31,8 +31,10 @@ les bases. Commencez par allumer votre Raspberry Pi et lancer
 Minecraft et Sonic Pi. Dans Minecraft, créez un nouveau monde, et dans
 Sonic Pi choisissez un buffer de libre et écrivez-y ce code :
 
-    mc_message "Let's get started..."
-    
+```
+mc_message "Let's get started..."
+```
+
 Cliquez sur le bouton 'Run' et vous verrez le message dans la fenêtre
 Minecraft. OK, on est prêt à démarrer, on va s'amuser...
 
@@ -50,8 +52,6 @@ juste besoin de quelques fonctions simples :
 * `rrand` : pour nous permetre de générer des valeurs aléatoires dans un intervalle
 * `live_loop` : pour nous permettre de faire pleuvoir du sable en continu
 
-<!-- Breakout box start --> 
-
 Si vous ne connaissez pas une des ces fonctions comme `rrand`, vous
 pouvez juste taper le mot dans votre buffer, cliquer dessus, puis
 taper `Control-i` sur le clavier pour ouvrir la documentation. Vous
@@ -59,22 +59,21 @@ pouvez aussi aller dans l'onglet *lang* du système d'aide puis
 y chercher directement les fonctions et toutes sortes d'autres choses
 excitantes que vous pouvez faire.
 
-
-<!-- Breakout box end -->
-
 Commençons par faire tomber un peu de pluie avant de laisser la
 tempête complète éclater. Récupérez votre emplacement courant et
 utilisez-la pour créer quelques blocs de sable dans le ciel pas loin :
 
-    x, y, z = mc_location
-    mc_set_block :sand, x, y + 20, z + 5
-    sleep 2
-    mc_set_block :sand, x, y + 20, z + 6
-    sleep 2
-    mc_set_block :sand, x, y + 20, z + 7
-    sleep 2
-    mc_set_block :sand, x, y + 20, z + 8
-    
+```
+x, y, z = mc_location
+mc_set_block :sand, x, y + 20, z + 5
+sleep 2
+mc_set_block :sand, x, y + 20, z + 6
+sleep 2
+mc_set_block :sand, x, y + 20, z + 7
+sleep 2
+mc_set_block :sand, x, y + 20, z + 8
+```
+
 Après avoir cliqué sur 'Run', vous devrez peut-être un peu regarder
 autour de vous car les blocs peuvent commencer par tomber derrière
 vous, suivant dans quelle direction vous êtes pour le moment. N'ayez
@@ -104,15 +103,17 @@ complète de la `live_loop` : la capacité magique de Sonic Pi qui
 montre la puissance entière de la programmation interactive : changer
 le code à la volée pendant qu'il est en train de s'exécuter !
 
-    live_loop :sand_storm do
-      x, y, z = mc_location
-      xd = rrand(-10, 10)
-      zd = rrand(-10, 10)
-      co = rrand(70, 130)
-      synth :cnoise, attack: 0, release: 0.125, cutoff: co
-      mc_set_block :sand, x + xd, y+20, z+zd
-      sleep 0.125
-    end
+```
+live_loop :sand_storm do
+  x, y, z = mc_location
+  xd = rrand(-10, 10)
+  zd = rrand(-10, 10)
+  co = rrand(70, 130)
+  synth :cnoise, attack: 0, release: 0.125, cutoff: co
+  mc_set_block :sand, x + xd, y+20, z+zd
+  sleep 0.125
+end
+```
     
 Qu'est-ce que c'est amusant ! On boucle assez vite (8 fois par
 seconde) et pendant chaque boucle on trouve l'emplacement de Steve
@@ -137,7 +138,6 @@ C'est votre passerelle pour vous produire comme un vrai VJ. Continuez
 à vous exercer à changer des choses. Jusqu'où arrivez-vous à modifier
 les visuels sans arrêter le code ?
 
-
 # Des formes de blocs épiques
 
 ![Screen 1](../images/tutorial/articles/A.08-minecraft-vj/minecraft-vj-1-small.png)
@@ -155,13 +155,15 @@ comme cela on peut générer toutes les coordonnées d'un carré. On peut
 ensuite choisir aléatoirement des types de blocs d'un anneau de blocs
 pour obtenir un effet intéressant :
 
-    x, y, z = mc_location
-    bs = (ring :gold, :diamond, :glass)
-    10.times do |xd|
-      10.times do |yd|
-        mc_set_block bs.choose, x + xd, y + yd, z
-      end
-    end
+```
+x, y, z = mc_location
+bs = (ring :gold, :diamond, :glass)
+10.times do |xd|
+  10.times do |yd|
+    mc_set_block bs.choose, x + xd, y + yd, z
+  end
+end
+```
 
 Pas mal. Pendant qu'on s'amuse ici, essayez de changer `bs.choose` en
 `bs.tick` pour passer d'un motif aléatoire à un motif plus régulier.

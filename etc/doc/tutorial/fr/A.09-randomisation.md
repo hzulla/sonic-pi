@@ -22,8 +22,9 @@ fois, mais demandons à Sonic Pi de choisir un nombre cette fois.
 Lancez Sonic Pi version 2.7 ou plus et demandez lui un nombre
 aléatoire mais de nouveau ne me dites pas le résultat.
 
-
-    print rand
+```
+print rand
+```
     
 Et maintenant pour le truc... est-ce que c'était `0.75006103515625` ?
 Oui ! Ha, je vois que vous êtes un peu sceptique. C'était peut-être
@@ -60,17 +61,18 @@ morceaux.
 Utilisons cette connaissance pour générer une mélodie aléatoire
 répétable :
 
-    8.times do
-     play rrand_i(50, 95)
-     sleep 0.125
-    end
+```
+8.times do
+ play rrand_i(50, 95)
+ sleep 0.125
+end
+```
 
 Tapez ceci dans un buffer de libre et cliquez sur 'Run'. Vous
 entendrez une mélodie de notes aléatoires entre 50 et 95. Quand elle
 aura fini, cliquez sur 'Run' à nouveau pour entendre exactement la
 même mélodie à nouveau.
 
-*start breakout box*
 ## Des fonctions aléatoires pratiques
 
 Sonic Pi contient un certain nombre de fonctions utiles pour
@@ -86,8 +88,6 @@ travailler avec le flux aléatoire. Voici une liste des plus utiles :
 Regardez leur documentation dans le système d'aide pour des
 informations détaillées et des exemples.
 
- *end breakout box*
-
 # Réinitialiser le flux
 
 Même si la capacité de répéter une séquence de notes choisies est
@@ -102,23 +102,25 @@ On peut régler le flux manuellement avec la fonction
 de départ à partir duquel un nouveau flux de valeurs aléatoires peut
 fleurir. Essayons-le :
 
-
-    use_random_seed 0
-    3.times do
-      play rrand_i(50, 95)
-      sleep 0.125
-    end
+```
+use_random_seed 0
+3.times do
+  play rrand_i(50, 95)
+  sleep 0.125
+end
+```
     
 Super, on récupère les trois premières notes de notre mélodie
 aléatoire ci-dessus : `84`, `83` et `71`. Cependant on peut
 maintenant changer la graine. Par exemple :
 
-    use_random_seed 1
-    3.times do
-      play rrand_i(50, 95)
-      sleep 0.125
-    end
-    
+```
+use_random_seed 1
+3.times do
+  play rrand_i(50, 95)
+  sleep 0.125
+end
+``` 
     
 Intéressant, on obtient `83`, `71` et `61`. Vous avez peut-être
 remarqué que les deux premiers nombres ici sont les mêmes que les deux
@@ -136,13 +138,15 @@ Revisitons notre mélodie aléatoire de huit notes avec cette nouvelle
 capacité de réinitialiser le flux, et mettons là dans une boucle
 interactive pour pouvoir expérimenter pendant qu'elle joue :
 
-    live_loop :random_riff do    
-      use_random_seed 0
-      8.times do
-        play rrand_i(50, 95), release: 0.1
-        sleep 0.125
-      end
-    end
+```
+live_loop :random_riff do    
+  use_random_seed 0
+  8.times do
+    play rrand_i(50, 95), release: 0.1
+    sleep 0.125
+  end
+end
+```
 
 Maintenant, pendant qu'elle est en train de jouer, changez la valeur
 de la graine de `0` en quelque chose d'autre. Essayez `100`, ou
@@ -171,6 +175,7 @@ vous aurez trouvé quelques graines qui vous plaisent, donnez un
 concert de live coding à vos amis en changeant simplement entre vos
 graines préférées pour créer un morceau entier.
 
+```
 live_loop :random_riff do
   use_random_seed 10300
   use_synth :prophet
@@ -192,5 +197,4 @@ live_loop :drums do
     sleep 0.125
   end
 end
-
-
+```

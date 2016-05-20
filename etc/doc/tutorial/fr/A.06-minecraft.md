@@ -29,8 +29,10 @@ temps.
 
 Dans un buffer disponible tapez ce qui suit :
 
-    mc_message "Hello Minecraft from Sonic Pi!"
-    
+```
+mc_message "Hello Minecraft from Sonic Pi!"
+```
+
 Maintenant cliquez sur 'Run'. Boum ! Votre message est apparu dans
 Minecraft ! C'était facile, non ? Maintenant arrêtez un moment de lire
 ceci et jouez un peu avec vos propres messages. Amusez-vous !
@@ -45,8 +47,10 @@ lent et ennuyeux. Ce serait beaucoup mieux si on avait une sorte de
 machine de téléportation. Eh bien, grâce à Sonic Pi, on en a une.
 Essayez ceci :
 
-    mc_teleport 80, 40, 100
-    
+```
+mc_teleport 80, 40, 100
+```
+
 Oh ! On est monté bien haut. Si vous n'étiez pas en mode volant vous
 avez du retomber jusqu'au sol. Si vous double-tapez Espace pour entrer
 en mode volant et vous téléportez à nouveau, vous resterez en l'air
@@ -73,17 +77,19 @@ En utilisant les idées vues jusqu'ici, construisons un téléporteur
 sonique qui fera un son amusant de téléportation quand il nous fera
 voyager à travers le monde de Minecraft :
 
-    mc_message "Preparing to teleport...."
-    sample :ambi_lunar_land, rate: -1
-    sleep 1
-    mc_message "3"
-    sleep 1
-    mc_message "2"
-    sleep 1
-    mc_message "1"
-    sleep 1
-    mc_teleport 90, 20, 10
-    mc_message "Whoooosh!"
+```
+mc_message "Preparing to teleport...."
+sample :ambi_lunar_land, rate: -1
+sleep 1
+mc_message "3"
+sleep 1
+mc_message "2"
+sleep 1
+mc_message "1"
+sleep 1
+mc_teleport 90, 20, 10
+mc_message "Whoooosh!"
+```
     
 ![Screen 1](../images/tutorial/articles/A.06-minecraft/Musical-Minecraft-1-small.png)
 
@@ -95,9 +101,10 @@ commencer à cliquer furieusement la souris pour placer des blocs sous
 le curseur. Ou vous pourriez utiliser la magie de Sonic Pi. Essayez
 ceci :
 
-
-    x, y, z = mc_location
-    mc_set_block :melon, x, y + 5, z
+```
+x, y, z = mc_location
+mc_set_block :melon, x, y + 5, z
+```
 
 Maintenant regardez vers le haut ! Il y a un melon dans le ciel !
 Prenez un moment pour regarder le code. Qu'est-ce qu'on a fait ? Sur
@@ -109,11 +116,13 @@ spécifiées. Pour placer quelque chose plus haut dans le ciel on doit
 juste augmenter la valeur de y, c'est pour ça qu'on lui ajoute 5.
 Faisons un chemin de melons :
 
-    live_loop :melon_trail do
-      x, y, z = mc_location
-      mc_set_block :melon, x, y-1, z
-      sleep 0.125
-    end
+```
+live_loop :melon_trail do
+  x, y, z = mc_location
+  mc_set_block :melon, x, y-1, z
+  sleep 0.125
+end
+```
 
 Maintenant sautez dans Minecraft, assurez-vous d'être en mode volant
 (tapez deux fois sur Espace sinon) et volez autour du monde. Regardez
@@ -143,16 +152,18 @@ simplement `:melon` en `:brick` et cliquez sur `Run`. Eh voilà, vous
 construisez maintenant un chemin de briques. C'était simple, non ?
 Un peu de musique pour accompagner ça ? Facile. Essayez ceci :
 
-    live_loop :bass_trail do
-      tick
-      x, y, z = mc_location
-      b = (ring :melon, :brick, :glass).look
-      mc_set_block b, x, y -1, z
-      note = (ring :e1, :e2, :e3).look
-      use_synth :tb303
-      play note, release: 0.1, cutoff: 70
-      sleep 0.125
-    end
+```
+live_loop :bass_trail do
+  tick
+  x, y, z = mc_location
+  b = (ring :melon, :brick, :glass).look
+  mc_set_block b, x, y -1, z
+  note = (ring :e1, :e2, :e3).look
+  use_synth :tb303
+  play note, release: 0.1, cutoff: 70
+  sleep 0.125
+end
+```
     
 Maintenant pendant que ça joue commencez à modifier le code. Changez
 les types de bloc : essayez `:water`, `:grass` ou votre type de bloc
@@ -170,34 +181,30 @@ inquiétez pas si vous ne comprenez pas tout, tapez juste le code et
 jouez ensuite à modifier quelques-unes des valeurs pendant qu'il
 s'exécute. Amusez-vous bien et à la prochaine...
     
-
-    live_loop :note_blocks do
-      mc_message "This is Sonic Minecraft"
-      with_fx :reverb do
-        with_fx :echo, phase: 0.125, reps: 32 do
-          tick
-          x = (range 30, 90, step: 0.1).look
-          y = 20
-          z = -10
-          mc_teleport x, y, z
-          ns = (scale :e3, :minor_pentatonic)
-          n = ns.shuffle.choose
-          bs = (knit :glass, 3, :sand, 1)
-          b = bs.look
-          synth :beep, note: n, release: 0.1
-          mc_set_block b, x+20, n-60+y, z+10
-          mc_set_block b, x+20, n-60+y, z-10
-          sleep 0.25
-        end
-      end
+```
+live_loop :note_blocks do
+  mc_message "This is Sonic Minecraft"
+  with_fx :reverb do
+    with_fx :echo, phase: 0.125, reps: 32 do
+      tick
+      x = (range 30, 90, step: 0.1).look
+      y = 20
+      z = -10
+      mc_teleport x, y, z
+      ns = (scale :e3, :minor_pentatonic)
+      n = ns.shuffle.choose
+      bs = (knit :glass, 3, :sand, 1)
+      b = bs.look
+      synth :beep, note: n, release: 0.1
+      mc_set_block b, x+20, n-60+y, z+10
+      mc_set_block b, x+20, n-60+y, z-10
+      sleep 0.25
     end
-    
-    live_loop :beats do
-      sample :bd_haus, cutoff: 100
-      sleep 0.5
-    end
-          
+  end
+end
 
-
-
-
+live_loop :beats do
+  sample :bd_haus, cutoff: 100
+  sleep 0.5
+end
+```

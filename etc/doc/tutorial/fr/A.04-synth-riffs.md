@@ -26,11 +26,13 @@ ce sera pour un autre tutoriel...
 Créons une boucle interactive simple où l'on modifiera en continu le
 synthé courant :
 
-    live_loop :timbre do
-      use_synth (ring :tb303, :blade, :prophet, :saw, :beep, :tri).tick
-      play :e2, attack: 0, release: 0.5, cutoff: 100
-      sleep 0.5
-    end
+```
+live_loop :timbre do
+  use_synth (ring :tb303, :blade, :prophet, :saw, :beep, :tri).tick
+  play :e2, attack: 0, release: 0.5, cutoff: 100
+  sleep 0.5
+end
+```
 
 Regardez ce code. On parcourt (avec `tick`) juste un anneau de noms de
 synthés (on boucle sur chacun d'eux à leur tour puis on répéte la
@@ -69,12 +71,14 @@ Un autre aspect important de notre synthé principal est le choix de
 notes que l'on veut jouer. Si vous avez déjà une bonne idée, alors
 vous pouvez juste créer un anneau avec vos notes et les parcourir :
 
-    live_loop :riff do
-      use_synth :prophet
-      riff = (ring :e3, :e3, :r, :g3, :r, :r, :r, :a3)
-      play riff.tick, release: 0.5, cutoff: 80
-      sleep 0.25
-    end
+```
+live_loop :riff do
+  use_synth :prophet
+  riff = (ring :e3, :e3, :r, :g3, :r, :r, :r, :a3)
+  play riff.tick, release: 0.5, cutoff: 80
+  sleep 0.25
+end
+```
 
 Ici nous avons défini une mélodie avec un anneau qui inclut des notes
 comme `:e3` et des silences représentés par `:r`. On utilise ensuite
@@ -89,13 +93,15 @@ et de choisir celui que l'on préfère. Pour faire cela on doit combiner
 trois choses : des anneaux, de l'aléatoire et des graines aléatoires.
 Regardons un exemple :
 
-    live_loop :random_riff do
-      use_synth :dsaw
-      use_random_seed 3
-      notes = (scale :e3, :minor_pentatonic).shuffle
-      play notes.tick, release: 0.25, cutoff: 80
-      sleep 0.25
-    end
+```
+live_loop :random_riff do
+  use_synth :dsaw
+  use_random_seed 3
+  notes = (scale :e3, :minor_pentatonic).shuffle
+  play notes.tick, release: 0.25, cutoff: 80
+  sleep 0.25
+end
+```
 
 Plusieurs choses se passent : regardons les une par une. On commence
 par spécifier la graine aléatoire 3. Qu'est-ce que cela signifie ? Eh
@@ -141,15 +147,17 @@ aider à trouver notre rythme. Au lieu de jouer toutes les notes on
 peut utiliser une condition pour jouer une note avec une probabilité
 donnée. Voyons cela :
 
-    live_loop :random_riff do
-      use_synth :dsaw
-      use_random_seed 30
-      notes = (scale :e3, :minor_pentatonic).shuffle
-      16.times do
-        play notes.tick, release: 0.2, cutoff: 90 if one_in(2)
-        sleep 0.125
-      end
-    end
+```
+live_loop :random_riff do
+  use_synth :dsaw
+  use_random_seed 30
+  notes = (scale :e3, :minor_pentatonic).shuffle
+  16.times do
+    play notes.tick, release: 0.2, cutoff: 90 if one_in(2)
+    sleep 0.125
+  end
+end
+```
 
 Une fonction très utile à connaître est `one_in` qui nous donne une
 valeur `true` ou `false` (vrai ou faux) avec la probabilité spécifiée.
@@ -171,31 +179,29 @@ ou même en 4 ou 3 et voyez comment cela affecte le rythme du riff.
 OK, combinons tout ce que nous avons appris dans un dernier exemple.
 A la prochaine !
 
-    live_loop :random_riff do
-      #  uncomment to bring in:
-      #  synth :blade, note: :e4, release: 4, cutoff: 100, amp: 1.5
-      use_synth :dsaw
-      use_random_seed 43
-      notes = (scale :e3, :minor_pentatonic, num_octaves: 2).shuffle.take(8)
-      8.times do
-        play notes.tick, release: rand(0.5), cutoff: rrand(60, 130) if one_in(2)
-        sleep 0.125
-      end
-    end
-     
-    live_loop :drums do
-      use_random_seed 500
-      16.times do
-        sample :bd_haus, rate: 2, cutoff: 110 if rand < 0.35
-        sleep 0.125
-      end
-    end
-     
-    live_loop :bd do
-      sample :bd_haus, cutoff: 100, amp: 3
-      sleep 0.5
-    end
-
-
-
-
+```
+live_loop :random_riff do
+  #  uncomment to bring in:
+  #  synth :blade, note: :e4, release: 4, cutoff: 100, amp: 1.5
+  use_synth :dsaw
+  use_random_seed 43
+  notes = (scale :e3, :minor_pentatonic, num_octaves: 2).shuffle.take(8)
+  8.times do
+    play notes.tick, release: rand(0.5), cutoff: rrand(60, 130) if one_in(2)
+    sleep 0.125
+  end
+end
+ 
+live_loop :drums do
+  use_random_seed 500
+  16.times do
+    sample :bd_haus, rate: 2, cutoff: 110 if rand < 0.35
+    sleep 0.125
+  end
+end
+ 
+live_loop :bd do
+  sample :bd_haus, cutoff: 100, amp: 3
+  sleep 0.5
+end
+```

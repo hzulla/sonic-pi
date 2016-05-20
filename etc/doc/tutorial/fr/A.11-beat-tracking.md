@@ -40,11 +40,10 @@ puts tick #=> 1
 puts tick #=> 2
 ```
 
-<breakout> Quand vous voyez le symbole `#=>` à la fin d'une ligne de
+Quand vous voyez le symbole `#=>` à la fin d'une ligne de
 code cela veut dire que cette ligne va noter ce texte dans la partie
 de droite de Sonic Pi. Par exemple, `puts foo #=> 0` veut dire que le
 code `puts foo` affiche `0` dans le log à cet endroit du programme.
-</breakout>
 
 # Vérifier le compteur
 
@@ -140,6 +139,7 @@ Une chose très importante à savoir est que les `tick`s sont liés à la
 compteur indépendant. C'est beaucoup plus puissant que d'avoir un
 métronome et battement global. Regardons ce que cela donne :
 
+```
 notes = (ring 57, 62, 55, 59, 64)
 
 with_fx :reverb do
@@ -155,12 +155,14 @@ live_loop :arp2 do
   play notes.tick - 12, release: 0.2
   sleep 0.75
 end
+```
 
 # Collisions de battements
 
 Une grande source de confusion dans le système de tick de Sonic Pi est
 quand on veut parcourir plusieurs anneaux dans le même `live_loop`.
 
+```
 use_bpm 300
 use_synth :blade
 live_loop :foo do
@@ -168,6 +170,7 @@ live_loop :foo do
   play (scale :e3, :minor_pentatonic).tick
   sleep 1
 end
+```
 
 Même si chaque `live_loop` a son compteur indépendant, ici on appelle
 `.tick` deux fois dans la même `live_loop`. Cela veut dire que le
@@ -191,7 +194,7 @@ traitez pas ceci comme un morceau terminé. Commencez à changer des
 choses et amusez-vous avec et voyez en quoi vous pouvez le
 transformer. A la prochaine...
 
-
+```
 use_bpm 240
 notes = (scale :e3, :minor_pentatonic).shuffle
 
@@ -215,3 +218,4 @@ live_loop :bar do
   play notes.look, release: r, cutoff: co
   sleep 0.5
 end
+```
