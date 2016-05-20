@@ -14,6 +14,4 @@ Verfügung.
 
 Die Programmoberfläche von Sonic Pi mag simpel erscheinen,
 doch wenn Du willst, kannst Du damit sehr tief in ausgeklügelte 
-Klangmanipulationen eintauchen.
-
-Haltet Euch fest...
+Klangmanipulationen eintauchen. Haltet Euch fest...
