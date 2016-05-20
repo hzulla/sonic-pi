@@ -94,6 +94,12 @@ def convert_element(filename, el, el2, bullet = nil)
   case el.type
   
   when :root, :li, :ul, :ol
+    if $task == :import then
+      if el.type != el2.type then
+        warn "Import #{filename}: element type mismatch #{el.type}(#{el.options[:location]}) != #{el2.type}(#{el2.options[:location]})"
+      end
+    end
+
     i = 0
     while (i < el.children.count) && (i < el2.children.count) do
       case el.type
@@ -110,7 +116,7 @@ def convert_element(filename, el, el2, bullet = nil)
 
     if $task == :import then
       if el.children.count != el2.children.count then
-        warn "Import: Unequal number of :#{el.type} elements #{el.children.count} != #{el2.children.count} in #{filename}"
+        warn "Import #{filename}: Unequal number of :#{el.type} elements #{el.children.count}(#{el.options[:location]}) != #{el2.children.count}(#{el2.options[:location]})"
       end
     end
 
@@ -184,7 +190,7 @@ def convert_element(filename, el, el2, bullet = nil)
     end
     
   else
-    raise "Error, please implement conversion for unknown Kramdown element type :#{el.type}"
+    raise "Error #{filename}: Please implement conversion for unknown Kramdown element type :#{el.type} in line #{el.options[:location]}"
   end
 end
 
