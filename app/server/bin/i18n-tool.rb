@@ -74,11 +74,13 @@ def handle_entry(msgid, msgstr, filename, line, flags = [])
   entry.flags |= flags
   entry.references << reference
   if $task == :import then
-    if msgid != msgstr then
-      entry.flags |= ["fuzzy"]
-      entry.msgstr = msgstr
-    else
-      entry.msgstr = ""
+    if (entry.msgstr.to_s == "") && (msgstr.to_s != "") then
+      if (msgid.to_s != msgstr.to_s) then
+        entry.flags |= ["fuzzy"]
+        entry.msgstr = msgstr.to_s
+      else
+        entry.msgstr = ""
+      end
     end
   end
   $pot[msgid] = entry
