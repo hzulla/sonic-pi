@@ -142,7 +142,6 @@ Nos proporciona un número aleatorio entre dos valores. Eso significa
 que nunca nos dará los números extremos del rango, sólo entre ellos.
 Ese número será un 'flotante', lo que significa que no es un número
 entero, sino una fracción de número. He aquí ejemplos de flotantes:
-
 `rrand(20, 110)`:
 
 * 87.5054931640625

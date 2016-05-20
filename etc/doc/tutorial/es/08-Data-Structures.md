@@ -14,10 +14,3 @@ necesitamos considerar una estructura de datos muy sencilla - la lista.
 
 Mirémosla en mayor detalle. Cubriremos su forma básica y también el modo de
 utilizarlas para representar escalas y acordes.
-
-
-
-
-
-
-
