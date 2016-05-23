@@ -63,8 +63,17 @@ class KramdownToOurMarkdown < Kramdown::Converter::Kramdown
 end
 
 
+def is_number? string
+  true if Float(string) rescue false
+end
+
 def handle_entry(msgid, msgstr, filename, line, flags = [])
   reference = "#{filename}:#{line}"
+  msgid.gsub!(/\\([.:_])/, '\1')
+  msgstr.gsub!(/\\([.:_])/, '\1')
+  if is_number?msgid then
+    return msgid
+  end
   if $pot.has_key?msgid then
     entry = $pot[msgid]
   else
@@ -79,7 +88,11 @@ def handle_entry(msgid, msgstr, filename, line, flags = [])
         entry.flags |= ["fuzzy"]
         entry.msgstr = msgstr.to_s
       else
-        entry.msgstr = ""
+        if entry.flags.include?"no-wrap" then
+          entry.msgstr = msgstr
+        else
+          entry.msgstr = ""
+        end
       end
     end
   end
@@ -199,7 +212,7 @@ end
 $translated = {}
 
 Dir["en/*.md"].sort.each do |path|
-  puts path
+  $stderr.puts path
   basename = File.basename(path)
   $translated[basename] = ""
   
@@ -224,17 +237,28 @@ Dir["en/*.md"].sort.each do |path|
   convert_element(basename, k.root, k2.root)
 end
 
-puts ("-" * 40)
-
 if $task == :translate then
   FileUtils::rm_rf "generated/#{$lang}"
   FileUtils::mkdir "generated/#{$lang}"
   $translated.each do |filename, newcontent|
-    puts filename
+    $stderr.puts filename
     File.open("generated/#{$lang}/#{filename}", 'w') do |f|
       f << newcontent
     end
   end
 elsif $task == :import then
+  puts <<-HEADER
+# This file is distributed under the same license as the Sonic Pi package.
+# It was generated. Do not edit this.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: Sonic Pi\\n"
+"Language: #{$lang}\\n"
+"MIME-Version: 1.0\\n"
+"Content-Type: text/plain; charset=UTF-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+
+  HEADER
   puts $pot.to_s
 end
